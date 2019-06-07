@@ -1,0 +1,116 @@
+
+
+callback need
+
+ 
+synchronous 
+
+function first(){
+  console.log(1);
+}
+function second(){
+  console.log(2);
+}
+first();
+second();
+
+output
+1
+2
+
+
+asynchronous
+
+function first()
+{
+ 
+  setTimeout( function(){
+    console.log(1);
+  }, 500 );
+}
+function second(){
+  console.log(2);
+}
+first();
+second();
+
+
+output 
+
+2
+1
+
+1)callback function
+
+function functionTwo(var1, var2, callback1, callback2) {
+    callback1(var1);	
+    callback2(var2);	
+}
+
+functionTwo(1, 2, function (x) { console.log(x); }, function (x) { console.log(x); })
+console.log("time");
+
+output:1,2
+
+
+
+2)Asynchronous
+
+fn1=function first()
+{
+ 
+  setTimeout( function(){
+    console.log(1);
+  }, 500 )
+  
+  
+  ;
+}
+fn2=function second(){
+  console.log(2);
+}
+
+
+function functionTwo( callback1, callback2) {
+    callback1();	
+    callback2();	
+    
+}
+
+
+functionTwo(fn1,fn2);
+console.log("time");
+
+output
+2
+time
+1;
+
+hence it is non blocking
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

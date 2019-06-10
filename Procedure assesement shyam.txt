@@ -1,0 +1,141 @@
+
+--1.Stored procedure without parameter
+
+ALTER PROCEDURE samplepro
+AS
+BEGIN
+CREATE TABLE empdetailsshyam (
+    empID int,
+    empname varchar(255),
+    designation varchar(255),
+	DEPARTMENTID INT,
+    managerid int
+);
+
+CREATE TABLE DEPARTMENTSHYAM
+(DEPARTMENTNAME VARCHAR(50),
+DEPARTMENTID INT
+)
+
+INSERT INTO empdetailsshyam
+VALUES (1, 'Anna', 'DEVELOPER', 1,1),
+          (2, 'BOB', 'TESTER', 2,1),
+          (3, 'Nick', 'ACCOUNTS', 3,2),
+		  (4,'HANK','DEVELOPER',1,2),
+
+		  (5,'JON','TESTER',2,1);
+
+INSERT INTO DEPARTMENTSHYAM
+VALUES ('DEVELOPER',1),('TESTER',2),('ACCOUNTS',3)
+
+END
+
+
+EXEC Samplepro;
+
+
+SELECT * FROM empdetailsshyam WHERE empID=1;
+SELECT *FROM DEPARTMENTSHYAM
+
+
+--CREATE PROCEDURE [dbo].[sp_tabCreate]
+		
+--		@tabName		nvarchar(30)
+		
+--		AS
+--		BEGIN
+		
+--		IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(@tabName) AND type in (N'U'))
+--DROP TABLE [dbo].[@tabName]
+		
+--	CREATE TABLE @tabName
+--	(
+--	[ID] [int] IDENTITY(1,1) NOT NULL,
+--	[RankID] [int] NOT NULL,
+--	[SlotTime] [nvarchar](10) NOT NULL,
+--	[SlotDate] [nvarchar](30) NOT NULL
+--) ON [PRIMARY]
+--END
+
+
+
+--create PROCEDURE samplepro2
+--AS
+--BEGIN
+--CREATE TABLE empdetailsshyam2 (
+--    empID int,
+--    empname varchar(255),
+--    designation varchar(255),
+--	DEPARTMENTID INT,
+--    managerid int
+--);
+
+--CREATE TABLE DEPARTMENTSHYAM2
+--(DEPARTMENTNAME VARCHAR(50),
+--DEPARTMENTID INT
+--)
+
+--INSERT INTO empdetailsshyam
+--VALUES (1, 'Anna', 'DEVELOPER', 1,1),
+--          (2, 'BOB', 'TESTER', 2,1),
+--          (3, 'Nick', 'ACCOUNTS', 3,2),
+--		  (4,'HANK','DEVELOPER',1,2),
+
+--		  (5,'JON','TESTER',2,1);
+
+--INSERT INTO DEPARTMENTSHYAM
+--VALUES ('DEVELOPER',1),('TESTER',2),('ACCOUNTS',3)
+
+--END
+
+
+--EXEC Samplepro;
+
+--2.stored procedure with parameter and entering records dynamically
+
+select * from empdetailsshyam
+--
+alter PROCEDURE MasterInsertUpdateDelete  
+(  
+@id int,  
+@name VARCHAR(10),  
+  
+@designation varchar(50),  
+@departmentid int,  
+@managerid int , 
+@StatementType nvarchar(20) = ''  
+)  
+AS  
+BEGIN  
+  
+
+IF @StatementType = 'Insert'  
+BEGIN  
+insert into  empdetailsshyam(empid,empname,designation,departmentid,managerid) values( @id, @name, @designation, @departmentid, @managerid)  
+END  
+IF @StatementType = 'Select'  
+BEGIN  
+--select empname,designation,departmentid,managerid from empdetailsshyam  where empid=@id;
+
+END  
+IF @StatementType = 'Update'  
+BEGIN  
+UPDATE empdetailsshyam SET  
+empID = @id, empname = @name, designation = @designation,DEPARTMENTID=@departmentid,managerid=@managerid  
+
+WHERE empID = @id  
+END  
+else IF @StatementType = 'Delete'  
+BEGIN  
+DELETE FROM empdetailsshyam WHERE empID = @id  
+END  
+end
+
+
+--3---giving the manager name for the employee id
+select empdetailsshyam.empname from empdetailsshyam where empid in (select empdetailsshyam.managerid  from empdetailsshyam where managerid=2);
+
+
+select empname from empdetailsshyam where managerid=2;
+
+select * from empdetailsshyam
